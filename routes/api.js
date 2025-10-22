@@ -1,8 +1,13 @@
-import express from "express"
-import * as authController from "../controller/authController.js"
+import express from "express";
+import * as authController from "../controller/authController.js";
+import * as profileController from "../controller/profileController.js"
+import { protect } from "../middleware/authMiddleware.js";
 
-const api = express.Router()
+const api = express.Router();
 
-api.get('/register',authController.register)
+api.post('/register', authController.register);
+api.post('/login', authController.login);
 
-export default api
+api.get('/me', protect,profileController.privateProfile);
+
+export default api;
